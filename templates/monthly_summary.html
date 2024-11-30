@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Centered Final Overview -->
+    <div class="text-center mb-4">
+        <h2 class="mb-3">Financial Overview</h2>
+        <div class="card mx-auto" style="max-width: 400px;">
+            <div class="card-body">
+                <p><strong>Previous Balance (Up to Last Month):</strong> ${{ previous_month_balance|floatformat:2 }}</p>
+                <p><strong>Total Deposits (Up to Now):</strong> ${{ total_deposits|floatformat:2 }}</p>
+                <p><strong>Total Expenses (Up to Now):</strong> ${{ total_expenses|floatformat:2 }}</p>
+                <p><strong>Final Balance (Current):</strong> ${{ balance|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="text-center mt-4">
+        <h4>Navigation</h4>
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="monthDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Report of the Month
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="monthDropdown">
+                {% for month in active_months %}
+                pass
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a href="{% url 'month_wise_summary' %}" class="btn btn-outline-primary mb-2">MonthWise Summary</a>
+        <a href="{% url 'date_wise_deposit' %}" class="btn btn-outline-success mb-2">Datewise All Deposits</a>
+        <a href="{% url 'date_wise_expense' %}" class="btn btn-outline-danger mb-2">Datewise All Expenses</a>
+    </div>
+
+    <!-- Print Option -->
+    <div class="text-center mt-4">
+        <button onclick="window.print()" class="btn btn-primary">Print Page</button>
+    </div>
+</div>
+{% endblock %}

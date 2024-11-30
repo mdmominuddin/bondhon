@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Month-wise Financial Summary</h2>
+
+    <!-- Month-wise Summary Table -->
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Deposits</th>
+                        <th>Total Expenses</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for summary in month_summary %}
+                    <tr>
+                        <td>{{ summary.month_name }}</td>
+                        <td>${{ summary.deposits|floatformat:2 }}</td>
+                        <td>${{ summary.expenses|floatformat:2 }}</td>
+                        <td>${{ summary.balance|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th>${{ total_deposits|floatformat:2 }}</th>
+                        <th>${{ total_expenses|floatformat:2 }}</th>
+                        <th>${{ total_balance|floatformat:2 }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

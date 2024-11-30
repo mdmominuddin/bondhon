@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">BONDHON SOCIETY</h2>
+    <h4 class="text-center mb-4">Member list</h4>
+    <hr>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Serial</th>
+                <th>Name</th>
+                <th>Designation</th>
+                <th>Shares</th>
+                <th>Phone Number</th>
+                <th>Actions</th> <!-- New column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+                <tr>
+                    <td style="width: 10px;">{{ forloop.counter }}</td>
+                    <td style="width: fit-content;">{{ member.name }}</td>
+                    <td style="width: fit-content;">{{ member.society_designation }}</td>
+                    <td style="width: fit-content;">{{ member.shares }}</td>
+                    <td style="width: fit-content;">{{ member.phone_number }}</td>
+                    <td style="width: fit-content;">
+                        <!-- Link to see deposits for the member -->
+                        <a href="{% url 'view_deposits' member.id %}" class="btn btn-info btn-sm">See Deposits</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Bottom Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="javascript:history.back()" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+        <a href="{% url 'home' %}" class="btn btn-primary btn-sm">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <button onclick="window.print()" class="btn btn-success btn-sm">
+            <i class="fas fa-print"></i> Print
+        </button>
+    </div>
+</div>
+{% endblock %}

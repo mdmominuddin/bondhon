@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mx-auto shadow p-4" style="max-width: 400px;">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Login</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block my-3">Login</button>
+                </div>
+            </form>
+            <p class="text-center mt-3">
+                Don't have an account? <a href="{% url 'register' %}">Register</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

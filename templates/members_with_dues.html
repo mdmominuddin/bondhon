@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+    h2 {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    .table thead {
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+</style>
+
+<div class="container mt-5">
+    <!-- Header Section -->
+    
+        <h4 class="text-center mb-2 text-primary" style="font-family: 'Arial', sans-serif; font-size: 1.5em; font-weight: 600;">BONDHON MULTIPURPOSE SOCIETY</h4>
+        <h5 class="text-center mb-4 text-primary" style="font-family: 'Arial', sans-serif; font-size: 1.3em; font-weight: 500;">Member_List with Dues</h5>
+        <h5 class="text-center mb-4 text-primary" style="font-family: 'Arial', sans-serif; font-size: 1.2em; font-weight: 400;">As on: {% now "d F Y, l" %}</h5>
+        
+    
+
+    <!-- Table Section -->
+    {% if dues_list %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="w-25">Member Name</th>
+                        <th class="w-25">Contribution Asked</th>
+                        <th class="w-25">Total Paid</th>
+                        <th class="w-25">Dues Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in dues_list %}
+                        <tr>
+                            <td>{{ item.member.name }}</td>
+                            <td>{{ item.total_contribution_for_member|floatformat:2 }}</td>
+                            <td>{{ item.total_deposit|floatformat:2 }}</td>
+                            <td class="text-danger fw-bold">{{ item.dues|floatformat:2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <h4> সর্বমোট {{  }} জন সম্মানিত সদস্য এখনো সম্পূর্ন চাঁদা পরিশোধ করেননি</h4>
+    {% else %}
+        <p class="alert alert-info">No members have dues at the moment.</p>
+    {% endif %}
+    <div>
+        <a href="{% url 'home' %}" class="btn btn-primary me-2">Home</a>
+        <button class="btn btn-secondary me-2" onclick="window.history.back()">Back</button>
+        <button class="btn btn-success" onclick="printPage()">Print</button>
+    </div>
+</div>
+
+<!-- Print Function -->
+<script>
+    function printPage() {
+        const originalContent = document.body.innerHTML;
+        const contentToPrint = document.querySelector('.container').innerHTML;
+        document.body.innerHTML = `<div class="container">${contentToPrint}</div>`;
+        window.print();
+        document.body.innerHTML = originalContent;
+        window.location.reload(); // Reload to restore the original page
+    }
+</script>
+
+<!-- Optional Styling -->
+
+{% endblock %}

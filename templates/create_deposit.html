@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 80%; 
+        margin: 0 auto;
+    }
+
+    .table-container {
+        overflow-x: auto; 
+        border: 1px solid #76818b; /* Darker border color */
+    }
+
+    .table {
+        width: 100%; 
+        margin: 0 auto;
+        text-align: left; /* Align content to the left */
+    }
+
+    .table td,
+    .table th {
+        text-align: left; /* Ensure individual cells align to the left */
+        vertical-align: middle; /* Align content vertically */
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #044d96a8;
+    }
+
+    button {
+        border-radius: 20px;
+        font-size: 1.1rem;
+        color: #044d96a8;
+    }
+</style>
+
+<div class="container mt-5 p-4 bg-light rounded shadow">
+    <h2 class="text-center mb-5">Make a New Deposit</h2>
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        <div class="table-container">
+            <table class="table table-bordered table-striped">
+                {{ form.as_table }}
+            </table>
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary px-5">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

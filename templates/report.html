@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Contribution Report{% endblock %}
+
+{% block content %}
+    <style>
+        @media print {
+            body {
+                margin: 1cm;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            tfoot {
+                display: table-footer-group;
+            }
+
+            @page {
+                size: A4; /* Specify the paper size (you can use 'letter' or other sizes) */
+                margin: 1cm;
+            }
+
+            .page-number::before {
+                content: counter(page);
+            }
+
+            .page-count::before {
+                content: counter(pages);
+            }
+        }
+
+        .print-button {
+            display: none; /* Hide the print button when printing */
+        }
+    </style>
+
+    <div class="container mt-4 mb-4">
+        <h1 class="mt-4 mb-4">Contribution Report</h1>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover mt-4">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Serial</th>
+                        <th>Member Name</th>
+                        <th>Total Deposited</th>
+                        <th>Detail of Deposition</th>
+                        <th>Due/Advance</th>
+                    </tr>
+                </thead>
+                <tbody>
+    {% for contribution in contributions %}
+        {% with due_advance=total_due_amount %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ contribution.member.name }}</td>
+            <td>${{ contribution.total_deposits|floatformat:2 }}</td>
+            <td>
+                <a href="?member_id={{ contribution.member.id }}" class="btn btn-info btn-sm">
+                    See Details
+                </a>
+            </td>
+            <td style="color:
+                {% if contribution.due_after_deposit > 0 %}
+                    red;
+                {% elif contribution.due_after_deposit < 0 %}
+                    green;
+                {% else %}
+                    black; /* or any other color for 'up-to-date' */
+                {% endif %}">
+                {{ contribution.due_after_deposit|floatformat:2 }}
+            </td>
+
+        </tr>
+        {% endwith %}
+    {% endfor %}
+    <tr class="table-info">
+        <td colspan="2"><strong>Total</strong></td>
+        <td><strong>${{ total_contributions }}</strong></td>
+        <td colspan="2"></td>
+    </tr>
+</tbody>
+
+
+            </table>
+        </div>
+
+        <!-- Add the Print button -->
+        <div class="text-center mt-4">
+            <button class="btn btn-primary print-button" onclick="window.print()">Print</button>
+        </div>
+    </div>
+
+    <script>
+        // Show the Print button after the page is loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('.print-button').style.display = 'block';
+        });
+    </script>
+{% endblock %}

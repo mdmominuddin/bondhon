@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center border-bottom py-2 mb-2 text-success">Category-wise Summary</h1>
+    <table class="table table-bordered table-striped table-responsive-lg mx-auto mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Category Name</th>
+                <th>Total Deposits</th>
+                <th>Total Expenses</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in category_summary %}
+            <tr>
+                <td>{{ item.category_name }}</td>
+                <td>{{ item.total_deposits }}</td>
+                <td>{{ item.total_expenses }}</td>
+                <td>{{ item.balance }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

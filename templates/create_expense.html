@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 80%; 
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .table-container {
+        overflow-x: auto; 
+        border: 1px solid #76818b; /* Darker border color */
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    .table {
+        width: 90% important!; 
+        margin: 0 auto;
+        text-align: left; 
+        border-collapse: collapse;
+    }
+
+    .table td,
+    .table th {
+        text-align: left; /* Ensure individual cells align to the left */
+        vertical-align: middle; /* Align content vertically */
+        padding: 12px; /* Add padding for better readability */
+        border-bottom: 1px solid #ddd; /* Add subtle border between rows */
+    }
+
+    .table th {
+        background-color: #f7f7f7; /* Light grey background for headers */
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #343a40;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    button {
+        border-radius: 25px;
+        font-size: 1.1rem;
+        color: #fff;
+        background-color: #044d96a8;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #033f7a;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+    }
+
+    .alert-danger ul {
+        padding-left: 20px;
+        margin-bottom: 0;
+    }
+
+    .alert-danger li {
+        font-size: 1rem;
+    }
+
+    .alert-info {
+        font-size: 1rem;
+        background-color: #d1ecf1;
+        color: #0c5460;
+    }
+</style>
+
+<div class="container mt-5 p-4 bg-light rounded shadow">
+    <h2 style="color: 044d96a8;">New Expense Entry</h2>
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Display form errors -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        <div class="text-center">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
