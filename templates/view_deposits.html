@@ -88,14 +88,14 @@
 
         <!-- Summary Section -->
         <div class="text-center mt-4">
-            <h3 class="text-info" style="font-family: 'Arial', sans-serif; font-size: 1.2em;">Total Contribution as per plan: ${{ total_contribution_for_member }}</h3>
-            <h3 class="text-info" style="font-family: 'Arial', sans-serif; font-size: 1.2em;">Total Deposits Made: ${{ total_deposit }}</h3>
+            <h3 class="text-info" style="font-family: 'Arial', sans-serif; font-size: 1.2em;">Total Contribution as per plan: Tk. {{ total_contribution_for_member }}</h3>
+            <h3 class="text-info" style="font-family: 'Arial', sans-serif; font-size: 1.2em;">Total Deposits Made: Tk. {{ total_deposit }}</h3>
             <h3 class="text-danger" style="font-family: 'Arial', sans-serif; font-size: 1.2em;">
                 Dues: 
                 {% if dues < 0 %}
-                    $0.00 - Thank you, you have no dues
+                    Tk. 0.00 - Thank you, you have no dues
                 {% else %}
-                    ${{ dues|floatformat:2 }}
+                    Tk. {{ dues|floatformat:2 }}
                 {% endif %}
             </h3>
 

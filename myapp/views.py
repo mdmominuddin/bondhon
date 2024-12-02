@@ -3,12 +3,15 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Sum, F
+from django.http import HttpResponseForbidden
+from django.urls import reverse
 from .forms import (
     UserRegistrationForm,
     UserLoginForm,
     ExpenseForm,
     DepositForm,
-    DueDepositForm, ContributionPlanForm,
+    DueDepositForm,
+    ContributionPlanForm,
 )
 from .models import (
     Expense,
@@ -20,18 +23,67 @@ from .models import (
 )
 from datetime import datetime
 
-# Authentication Views
+
+ALLOWED_USERS = ['sgtmomin@gmail.com', 'engg.rakhan@gmail.com']
+
 def register(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+
+            # Check if the user's email is in the allowed list
+            if user.email not in ALLOWED_USERS:
+                user.delete()  # Optionally delete the user if not in the allowed list
+                # Return custom error page with a redirect to the login page after a short delay
+                login_url = reverse('login')  # Get the URL for the login page
+                return HttpResponseForbidden(f"""
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                                margin: 0;
+                                font-family: Arial, sans-serif;
+                                background-color: #f8d7da;
+                            }}
+                            .error-container {{
+                                text-align: center;
+                                background-color: #f44336;
+                                color: white;
+                                padding: 20px;
+                                border-radius: 10px;
+                                font-size: 2rem;
+                                width: 60%;
+                            }}
+                        </style>
+                        <script type="text/javascript">
+                            setTimeout(function() {{
+                                window.location.href = "{login_url}";  // Redirect to login page
+                            }}, 5000);  // Redirect after 5 seconds
+                        </script>
+                    </head>
+                    <body>
+                        <div class="error-container">
+                            You are not authorized to register. You will be redirected to the login page.
+                        </div>
+                    </body>
+                    </html>
+                """)
+            
+            # Log the user in immediately after successful registration
             login(request, user)
             messages.success(request, "Registration successful. You are now logged in.")
-            return redirect("home")
+            return redirect("home")  # Redirect to the homepage or the desired page
     else:
         form = UserRegistrationForm()
+
     return render(request, "registration.html", {"form": form})
+
+
 
 
 def user_login(request):

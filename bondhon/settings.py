@@ -25,11 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+t5kxmkd86m8rk@4oj6rhas6e&-cgt(l+$_38rf+a-)f7sfsl^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 
-ALLOWED_HOSTS = ['mmominmilon.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 
@@ -130,8 +130,28 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Use database-backed sessions (default)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Session cookie settings
+SESSION_COOKIE_NAME = 'sessionid'  # Name of the session cookie
+SESSION_COOKIE_SECURE = True       # Use HTTPS for session cookies (recommended for production)
+SESSION_COOKIE_HTTPONLY = True     # Prevent JavaScript access to session cookies
+SESSION_COOKIE_SAMESITE = 'Lax'    # Options: 'Lax', 'Strict', or None (default is 'Lax')
+
+# Session expiration settings
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Keep session active after the browser is closed
+SESSION_COOKIE_AGE = 1209600             # Set session expiry time in seconds (default: 2 weeks)
+
+# Optional: Configure session file location for file-based sessions
+# SESSION_FILE_PATH = '/path/to/sessions'
+
+# Optional: Enable or disable session saving behavior
+SESSION_SAVE_EVERY_REQUEST = False  # Save session to the database on every request

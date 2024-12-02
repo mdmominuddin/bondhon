@@ -101,7 +101,7 @@
                         <td class="date-column">{{ expense.date|date:"d, m, Y" }}</td>
                         <td class="description-column text-start">{{ expense.description }}</td>
                         <td class="expense-head-column text-start">{{ expense.expense_head.name }}</td>
-                        <td class="amount-column text-end">${{ expense.amount|floatformat:2 }}</td>
+                        <td class="amount-column text-end"> Tk. {{ expense.amount|floatformat:2 }}</td>
                         <td class="created-by-column text-start">{{ expense.created_by.name }}</td>
                         <td class="remark-column text-start">{{ expense.remark }}</td>
                     </tr>
@@ -109,7 +109,7 @@
                     <!-- Total Expense Row -->
                     <tr class="font-weight-bold text-success">
                         <td colspan="4" class="text-right">Total Expense</td>
-                        <td class="text-end">${{ total_expense|floatformat:2 }}</td>
+                        <td class="text-end">Tk. {{ total_expense|floatformat:2 }}</td>
                         <td colspan="2"></td>
                     </tr>
                 </tbody>
